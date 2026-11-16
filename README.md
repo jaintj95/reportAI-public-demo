@@ -10,8 +10,8 @@ This is a static copy of the real app's interface. **Every answer is a recording
 answers were recorded from the real Relay app working on a sample e-Builder account with
 three synthetic projects (Relay Demo - Library HVAC, Relay Demo - Science Lab and Relay
 Demo - Parking Drainage). Nothing here connects to e-Builder, a database or an AI model.
-The page plays the recordings back in real time, progress steps included: each answer
-takes as long as it took in the real app, and shows the AI cost and time it recorded.
+Answers play at their recorded speed, progress steps included, with long waits shortened
+to at most 16 seconds. Each answer shows the AI cost it recorded and its time as played here.
 
 ## Try it
 
