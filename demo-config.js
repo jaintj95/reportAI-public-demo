@@ -6,7 +6,7 @@ window.RELAY_DEMO_CONFIG = {
   // Replaces {firstName}; leave "" to use the first word of name.
   firstName: "",
   // Your LinkedIn profile URL (https://...); leave "" to show the label below as plain text, without a link.
-  linkedinUrl: "",
+  linkedinUrl: "https://www.linkedin.com/in/jaintj95/",
   // The text that replaces {linkedin} (a link when linkedinUrl is set).
   linkedinLabel: "LinkedIn",
   // The reply. {name}, {firstName} and {linkedin} are filled in, [text](https://...) or [text](mailto:...) becomes a

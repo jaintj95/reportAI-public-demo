@@ -450,6 +450,14 @@
         save();
         run = null;
         setRunning(false);
+        if (item.type === 'turn' && chat.next && !box.value.trim()) {
+            // The conversation's recorded follow-up waits in the chat box, unsent. Phones keep the
+            // keyboard closed; desktops get the caret at its end.
+            setValue(D.turns[chat.next].question);
+            const pointer = window.matchMedia && matchMedia('(hover: hover) and (pointer: fine)').matches;
+            const compact = window.matchMedia && matchMedia('(max-width: 768px), (max-width: 950px) and (max-height: 500px)').matches;
+            if (pointer && !compact) focusComposer();
+        }
         settled();
     }
     function playTurn(id, typed) {
@@ -510,16 +518,15 @@
     const firsts = () => Object.values(D.conversations).map(ids => ids[0]);
     function choose(text) {
         const all = Object.keys(D.turns);
-        const exact = all.find(id => same(text, D.turns[id].question));
-        if (exact) {
-            const turn = D.turns[exact];
-            if (exact === chat.next || turn.index === 0) return {play: exact};
-            return {followUp: exact};
-        }
-        if (chat.next) {
+        if (chat.next && same(text, D.turns[chat.next].question)) return {play: chat.next};
+        const exactFirst = all.find(id => D.turns[id].index === 0 && same(text, D.turns[id].question));
+        if (exactFirst) return {play: exactFirst};
+        if (chat.next) {  // a reworded follow-up within the conversation (e.g. "show that as a bar chart")
             const {score, cover, common} = overlap2(text, D.turns[chat.next].question);
             if (score >= 0.5 || (cover >= 0.75 && common >= 2)) return {play: chat.next};
         }
+        const exact = all.find(id => same(text, D.turns[id].question));
+        if (exact) return {followUp: exact};  // a recorded follow-up asked out of its conversation
         let best = null;
         for (const id of all) {
             const {score} = overlap2(text, D.turns[id].question);
